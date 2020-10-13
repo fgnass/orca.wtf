@@ -1,7 +1,8 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>Orca</title>
+    <title>ORCΛ</title>
+    <link rel="manifest" href="manifest.json" />
     <style>
       body {
         margin: 0;
@@ -55,9 +56,21 @@
     </button>
     <script>
       function start(ev) {
+        document.body.classList.add("started");
         orca.contentWindow.start();
         pilot.contentWindow.start();
-        document.body.classList.add("started");
+      }
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+          navigator.serviceWorker
+            .register("/service-worker.js")
+            .then((registration) => {
+              console.log("SW registered: ", registration);
+            })
+            .catch((registrationError) => {
+              console.log("SW registration failed: ", registrationError);
+            });
+        });
       }
     </script>
   </body>

@@ -1,0 +1,32 @@
+{
+  "short_name": "ORCΛ",
+  "name": "ORCΛ",
+  "description": "Playground for Orca programming language",
+  "icons": [
+    {
+      "src": "/appicon/48x48.png",
+      "type": "image/png",
+      "sizes": "48x48"
+    },
+    {
+      "src": "/appicon/72x72.png",
+      "type": "image/png",
+      "sizes": "72x72"
+    },
+    {
+      "src": "/appicon/192x192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/appicon/512x512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "lang": "English",
+  "theme_color": "#ffffff",
+  "background_color": "#000000"
+}

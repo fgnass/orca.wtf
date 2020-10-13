@@ -1,5 +1,6 @@
-import Client from "./orca/desktop/sources/scripts/client";
 import LZString from "lz-string";
+import Client from "./orca/desktop/sources/scripts/client";
+import "./orca/desktop/sources/links/main.css";
 
 const client = (window.client = new Client());
 

@@ -1,4 +1,5 @@
 import Pilot from "./pilot/desktop/sources/scripts/pilot";
+import "./pilot/desktop/sources/links/style.css";
 
 const pilot = new Pilot();
 

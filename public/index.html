@@ -1,7 +1,11 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>Orca</title>
+    <title>ORCΛ</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="manifest" href="manifest.json" />
+    <meta name="theme-color" content="#000000" />
+    <link rel="apple-touch-icon" href="/appicon/192x192.png" />
     <style>
       body {
         margin: 0;
@@ -55,9 +59,21 @@
     </button>
     <script>
       function start(ev) {
+        document.body.classList.add("started");
         orca.contentWindow.start();
         pilot.contentWindow.start();
-        document.body.classList.add("started");
+      }
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+          navigator.serviceWorker
+            .register("/service-worker.js")
+            .then((registration) => {
+              console.log("SW registered: ", registration);
+            })
+            .catch((registrationError) => {
+              console.log("SW registration failed: ", registrationError);
+            });
+        });
       }
     </script>
   </body>

@@ -1,5 +1,10 @@
 const webpack = require("webpack");
 const CopyPlugin = require("copy-webpack-plugin");
+const TerserJSPlugin = require("terser-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+const WorkboxPlugin = require("workbox-webpack-plugin");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const orca = require("./orca.deps");
 
 // The absolute path of each orca module keyed by the name of its default export:
@@ -9,7 +14,7 @@ orca.forEach(([file, name]) => {
 });
 
 // Create a shimming rule for each Orca file:
-const rules = orca.map(([file, name, ...imports]) => {
+const shimmingRules = orca.map(([file, name, ...imports]) => {
   const use = [
     {
       loader: "exports-loader",
@@ -45,8 +50,6 @@ module.exports = {
     orca: "./orca.js",
     pilot: "./pilot.js",
   },
-  mode: "development",
-  devtool: "inline-source-map",
   resolve: {
     // Browser implementations for Node.js modules
     fallback: {
@@ -56,21 +59,48 @@ module.exports = {
       "node-osc": require.resolve("./browser/node-osc"),
     },
   },
+  output: {
+    publicPath: "",
+  },
   module: {
-    rules,
+    rules: [
+      {
+        test: /\.css$/,
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+              publicPath: "/",
+            },
+          },
+          "css-loader",
+        ],
+      },
+      {
+        test: /\.(woff|woff2|eot|ttf|otf)$/,
+        use: ["file-loader"],
+      },
+      ...shimmingRules,
+    ],
+  },
+  optimization: {
+    minimizer: [new TerserJSPlugin({}), new OptimizeCSSAssetsPlugin({})],
   },
   plugins: [
+    new CleanWebpackPlugin(),
     // Use a simple Buffer mock
     new webpack.ProvidePlugin({
       Buffer: require.resolve("./browser/buffer"),
     }),
+    new MiniCssExtractPlugin(),
     new CopyPlugin({
-      patterns: [
-        { from: "public" },
-        { from: "orca/desktop/sources/links", to: "orca/links" },
-        { from: "pilot/desktop/sources/links", to: "pilot/links" },
-        { from: "pilot/desktop/sources/media", to: "pilot/media" },
-      ],
+      patterns: [{ from: "public" }],
+    }),
+    new WorkboxPlugin.GenerateSW({
+      // these options encourage the ServiceWorkers to get in there fast
+      // and not allow any straggling "old" SWs to hang around
+      clientsClaim: true,
+      skipWaiting: true,
     }),
   ],
 };

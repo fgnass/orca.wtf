@@ -14,10 +14,9 @@ Whenever you edit an orca file its contents is encoded in the URL so that you ca
 
 ## Implementation Details
 
-Both Orca and Pilot are linked as git submodules and are left completely untouched so that they can easily be updated.
+Both Orca and Pilot are linked as git submodules and are left completely untouched so that they can easily be updated. (Update: Pilot now points to a fork that includes an unmerged PR which adds white, pink and brown noise waveforms.)
 
 The bundling is done using Webpack.
 In that process all Electron/Node.js specific code is replaced with mock implementations that can be found in `/browser`. Most notably `dgram.js` that replaces the UDP communication with plain cross-iframe JavaScript calls.
 
 Unlike Pilot, Orca is not built using ES modules but relies on globals. The webpack config sets up some shimming rules to convert these into proper modules that can be imported.
-

@@ -1,0 +1,26 @@
+{
+  "name": "orca.wtf",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "build": "webpack",
+    "watch": "webpack --watch",
+    "start": "webpack serve",
+    "deploy": "gh-pages -d dist"
+  },
+  "author": "Felix Gnass <fgnass@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "events": "^3.2.0",
+    "lz-string": "^1.4.4",
+    "tone": "^13.4.9"
+  },
+  "devDependencies": {
+    "copy-webpack-plugin": "^6.2.1",
+    "exports-loader": "^1.1.1",
+    "imports-loader": "^1.2.0",
+    "webpack": "^5.0.0",
+    "webpack-cli": "^4.0.0",
+    "webpack-dev-server": "^3.11.0"
+  }
+}

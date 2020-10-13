@@ -1,0 +1,6 @@
+[submodule "orca"]
+	path = orca
+	url = https://github.com/hundredrabbits/Orca.git
+[submodule "pilot"]
+	path = pilot
+	url = https://github.com/hundredrabbits/Pilot.git

@@ -7,32 +7,58 @@
         margin: 0;
         background: #000;
         color: #fff;
+      }
+      button {
+        color: inherit;
+        background: transparent;
+        border: none;
         position: fixed;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        outline: none;
+      }
+      button > svg {
+        width: 20vmin;
+        height: 20vmin;
+      }
+      .started button {
+        display: none;
       }
       iframe {
         border: 0;
-        position: absolute;
+        display: block;
+        position: fixed;
         top: 0;
-        bottom: 0;
-        height: auto;
+        height: 100vh;
       }
       #orca {
+        width: calc(100vw - 250px);
         left: 0;
-        right: 421px;
       }
       #pilot {
+        width: 250px;
         right: 0;
-        left: auto;
-        width: 420px;
       }
     </style>
   </head>
   <body>
     <iframe id="orca" src="orca.html"></iframe>
     <iframe id="pilot" src="pilot.html"></iframe>
+    <button onclick="start()">
+      <svg viewBox="0 0 24 24">
+        <path
+          fill="currentColor"
+          d="M10,16.5V7.5L16,12M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"
+        />
+      </svg>
+    </button>
+    <script>
+      function start(ev) {
+        orca.contentWindow.start();
+        pilot.contentWindow.start();
+        document.body.classList.add("started");
+      }
+    </script>
   </body>
 </html>

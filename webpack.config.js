@@ -93,7 +93,14 @@ module.exports = {
     }),
     new MiniCssExtractPlugin(),
     new CopyPlugin({
-      patterns: [{ from: "public" }],
+      patterns: [
+        {
+          from: "public",
+          globOptions: {
+            dot: false,
+          },
+        },
+      ],
     }),
     new WorkboxPlugin.GenerateSW({
       // these options encourage the ServiceWorkers to get in there fast

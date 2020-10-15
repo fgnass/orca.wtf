@@ -46,6 +46,7 @@ const shimmingRules = orca.map(([file, name, ...imports]) => {
 
 module.exports = {
   entry: {
+    index: "./index.js",
     orca: "./orca.js",
     pilot: "./pilot.js",
   },
@@ -60,6 +61,9 @@ module.exports = {
   },
   output: {
     publicPath: "",
+  },
+  devServer: {
+    allowedHosts: ["localhost", "localtest.me"],
   },
   module: {
     rules: [

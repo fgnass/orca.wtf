@@ -1,0 +1,99 @@
+@import url(pilot/desktop/sources/links/fonts.css);
+
+body {
+  margin: 0;
+  background: #000;
+  color: #fff;
+  font-family: "input_mono_regular";
+  line-height: 1.6;
+}
+a {
+  color: #fff;
+}
+#intro {
+  padding: 10vw;
+  max-width: 60ch;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: none;
+}
+.showIntro #intro {
+  display: block;
+}
+p.buttons {
+  margin-bottom: 3em;
+}
+p.secondary {
+  color: #555;
+}
+button {
+  display: flex;
+  align-items: center;
+  font: inherit;
+  color: #fff;
+  background: transparent;
+  border: 2px solid #fff;
+  border-radius: 2px;
+  outline: none;
+  padding: 0.5em 1em;
+  margin-bottom: 1em;
+}
+button.primary {
+  color: #000;
+  background: #fff;
+}
+button > svg {
+  margin-right: 0.5em;
+}
+
+#play {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: none;
+}
+#play svg {
+  width: 20vmin;
+  height: 20vmin;
+}
+.showPlayButton #play {
+  display: block;
+}
+iframe {
+  border: 0;
+  display: block;
+  width: 100vw;
+}
+#orca {
+  height: 100vh;
+}
+#pilot {
+  opacity: 0;
+}
+.started #pilot {
+  opacity: 1;
+}
+@media (min-height: 800px) {
+  #orca {
+    height: calc(100vh - 150px);
+  }
+}
+@media (min-width: 769px) {
+  iframe {
+    position: absolute;
+    top: 0;
+  }
+  #orca {
+    width: calc(100vw - 250px);
+    height: 100vh;
+    left: 0;
+  }
+  #pilot {
+    width: 250px;
+    height: 100vh;
+    right: 0;
+  }
+}

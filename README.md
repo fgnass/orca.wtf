@@ -4,7 +4,7 @@ An online playground to run Orca and Pilot directly in the browser.
 
 ## About
 
-[Orca](https://hundredrabbits.itch.io/orca) is an esoteric programming language, designed to create procedural sequencers in which each letter of the alphabet is an operation, where lowercase letters operate on bang, uppercase letters operate each frame.
+[Orca](https://hundredrabbits.itch.io/orca) is an esoteric programming language, designed to create procedural sequencers in which each letter of the alphabet is an operation.
 
 [Pilot](https://wiki.xxiivv.com/site/pilot.html) is a mini synthetiser designed to be used with Orca.
 

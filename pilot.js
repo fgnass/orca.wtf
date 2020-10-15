@@ -1,10 +1,23 @@
+import Tone from "tone";
 import Pilot from "./pilot/desktop/sources/scripts/pilot";
 import "./pilot/desktop/sources/links/style.css";
 
-const pilot = new Pilot();
+const interactionRequired = Tone.context.state !== "running";
 
-// Expose a function to be called from the parent
-window.top.register(() => {
-  pilot.install(document.body);
-  pilot.start();
-});
+function register() {
+  const pilot = new Pilot();
+  window.top.register(
+    {
+      init() {
+        pilot.install(document.body);
+      },
+      start() {
+        pilot.start();
+      },
+    },
+    interactionRequired
+  );
+}
+
+if (window.top.register) register();
+else window.top.addEventListener("load", register);

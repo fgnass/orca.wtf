@@ -22,13 +22,14 @@
         left: 50%;
         transform: translate(-50%, -50%);
         outline: none;
+        display: none;
       }
       button > svg {
         width: 20vmin;
         height: 20vmin;
       }
-      .started button {
-        display: none;
+      .ready button {
+        display: block;
       }
       iframe {
         border: 0;
@@ -46,24 +47,19 @@
         right: 0;
       }
     </style>
-  </head>
-  <body>
-    <iframe id="orca" src="orca.html"></iframe>
-    <iframe id="pilot" src="pilot.html"></iframe>
-    <button onclick="start()">
-      <svg viewBox="0 0 24 24">
-        <path
-          fill="currentColor"
-          d="M10,16.5V7.5L16,12M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"
-        />
-      </svg>
-    </button>
     <script>
-      function start(ev) {
-        document.body.classList.add("started");
-        orca.contentWindow.start();
-        pilot.contentWindow.start();
+      const callbacks = [];
+      function register(cb) {
+        callbacks.push(cb);
+        if (callbacks.length === 2) {
+          document.body.className = "ready";
+        }
       }
+      function start() {
+        document.body.className = "started";
+        callbacks.forEach((cb) => cb());
+      }
+      /*
       if ("serviceWorker" in navigator) {
         window.addEventListener("load", () => {
           navigator.serviceWorker
@@ -76,6 +72,19 @@
             });
         });
       }
+      */
     </script>
+  </head>
+  <body>
+    <iframe id="orca" src="orca.html"></iframe>
+    <iframe id="pilot" src="pilot.html"></iframe>
+    <button onclick="start()">
+      <svg viewBox="0 0 24 24">
+        <path
+          fill="currentColor"
+          d="M10,16.5V7.5L16,12M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"
+        />
+      </svg>
+    </button>
   </body>
 </html>

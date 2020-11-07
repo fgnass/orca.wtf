@@ -10,6 +10,9 @@ body {
 a {
   color: #fff;
 }
+path {
+  fill: currentColor;
+}
 #intro {
   padding: 10vw;
   max-width: 60ch;
@@ -32,22 +35,73 @@ button {
   align-items: center;
   font: inherit;
   color: #fff;
-  background: transparent;
+  background: #000;
   border: 2px solid #fff;
   border-radius: 2px;
   outline: none;
-  padding: 0.5em 1em;
-  margin-bottom: 1em;
+  padding: 0.5em 1.2em 0.5em 0.8em;
+  white-space: nowrap;
 }
 button.primary {
   color: #000;
   background: #fff;
 }
 button > svg {
+  width: 24px;
+  height: 24px;
   margin-right: 0.5em;
 }
 
-#play {
+footer {
+  position: absolute;
+  bottom: 22px;
+  right: 35px;
+  z-index: 2;
+  font-size: 0.7em;
+  opacity: 0;
+}
+
+#shareDialog {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 60ch;
+  max-width: 90vw;
+  box-sizing: border-box;
+  padding: 1em 4em 3.3em;
+  transform: translate(-50%, -50%);
+  border-radius: 2px;
+  background: #fff;
+  color: #000;
+  opacity: 0;
+  pointer-events: none;
+}
+#shareDialog:focus-within {
+  opacity: 1;
+  z-index: 1;
+  pointer-events: inherit;
+}
+#shareInput {
+  flex: 1;
+  padding: 1em;
+  outline: none;
+  border: 2px solid #000;
+  border-radius: 2px;
+}
+#shareDialog button {
+  border-color: #000;
+}
+
+.row {
+  display: flex;
+}
+.row > * + * {
+  margin-left: 10px;
+}
+.stack > * + * {
+  margin-top: 1em;
+}
+#playButton {
   display: none;
   position: absolute;
   top: 50%;
@@ -55,11 +109,11 @@ button > svg {
   transform: translate(-50%, -50%);
   border: none;
 }
-#play svg {
+#playButton svg {
   width: 20vmin;
   height: 20vmin;
 }
-.showPlayButton #play {
+.showPlayButton #playButton {
   display: block;
 }
 iframe {
@@ -67,17 +121,18 @@ iframe {
   display: block;
   width: 100vw;
 }
-#orca {
+#orcaFrame {
   height: 100vh;
 }
-#pilot {
+#pilotFrame {
   opacity: 0;
 }
-.started #pilot {
+.started #pilotFrame,
+.started footer {
   opacity: 1;
 }
 @media (min-height: 800px) {
-  #orca {
+  #orcaFrame {
     height: calc(100vh - 150px);
   }
 }
@@ -86,12 +141,12 @@ iframe {
     position: absolute;
     top: 0;
   }
-  #orca {
+  #orcaFrame {
     width: calc(100vw - 250px);
     height: 100vh;
     left: 0;
   }
-  #pilot {
+  #pilotFrame {
     width: 250px;
     height: 100vh;
     right: 0;

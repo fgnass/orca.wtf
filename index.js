@@ -2,22 +2,26 @@ import "./index.css";
 
 const hash = window.top.location.hash.slice(1);
 
-const modules = [];
-let interactionRequired;
+let orca;
+let pilot;
 
-/**
- * Global callback that is invoked by the Orca and Pilot iframes.
- */
-window.register = (mod, requiresInteraction) => {
-  modules.push(mod);
-  if (requiresInteraction) interactionRequired = true;
-  if (modules.length === 2) {
-    // Both modules are loaded, initialize them...
-    modules.forEach((mod) => mod.init(hash));
+window.registerOrca = (orcaApi) => {
+  orca = orcaApi;
+  check();
+};
+
+window.registerPilot = (pilotApi) => {
+  pilot = pilotApi;
+  check();
+};
+
+function check() {
+  if (pilot && orca) {
+    pilot.init();
     document.body.classList.add("ready");
     if (hash) {
       // Content was passed in the URL, skip the intro
-      if (interactionRequired) {
+      if (pilot.interactionRequired) {
         // Playback requires user interaction, show a play button
         document.body.classList.add("showPlayButton");
       } else {
@@ -27,7 +31,7 @@ window.register = (mod, requiresInteraction) => {
       document.body.className = "showIntro";
     }
   }
-};
+}
 
 window.startDemo = () => {
   window.start(
@@ -40,9 +44,47 @@ window.startShared = () => {
 };
 
 window.start = (bin) => {
-  modules.forEach((mod) => mod.start(bin));
+  pilot.start();
   document.body.className = "started";
-  document.getElementById("orca").contentWindow.focus();
+  console.log({ hash, bin, test: /^room=/.test(bin) });
+  if (/^room=/.test(bin)) {
+    orca.joinRoom(bin.slice(5));
+    multiplayerButton.classList.add("primary");
+  } else {
+    if (bin) orca.load(bin);
+    else orca.showGuide();
+  }
+  orca.start();
+  orcaFrame.contentWindow.focus();
+};
+
+window.createRoom = async () => {
+  const room = Math.random().toString(32).slice(2);
+  orca.createRoom(room);
+  multiplayerButton.classList.add("primary");
+  const showUrl = () => shareUrl(`${window.origin}/#room=${room}`);
+  multiplayerButton.onclick = showUrl;
+  showUrl();
+};
+
+function shareUrl(url) {
+  shareInput.value = url;
+  shareInput.select();
+}
+
+window.copy = async () => {
+  const href = shareInput.value;
+  try {
+    await navigator.clipboard.writeText(href);
+  } catch (e) {
+    // fallback to open in new window
+    window.open(href);
+  }
+  orcaFrame.contentWindow.focus();
+};
+window.share = () => {
+  const bin = orca.getCode();
+  shareUrl(`${window.origin}/#${bin}`);
 };
 
 /* Add a service-worker to enable offline use */

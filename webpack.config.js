@@ -60,7 +60,7 @@ module.exports = {
     },
   },
   output: {
-    publicPath: "",
+    publicPath: "auto",
   },
   devServer: {
     allowedHosts: ["localhost", "localtest.me"],

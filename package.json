@@ -6,7 +6,7 @@
     "build": "webpack --mode=production",
     "watch": "webpack --watch",
     "start": "webpack serve",
-    "deploy": "npm run build && cp CNAME dist && gh-pages -d dist"
+    "deploy": "npm run build && gh-pages -d dist"
   },
   "author": "Felix Gnass <fgnass@gmail.com>",
   "license": "MIT",
